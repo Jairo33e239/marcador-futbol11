@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Fútbol - OBS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Panel del Marcador -->
+        <div class="scoreboard" id="scoreboard">
+            <!-- Equipo Local -->
+            <div class="team team-local">
+                <div class="escudo-container" onclick="changeLogo('local')">
+                    <img id="escudo-local" src="escudos/default.png" alt="Escudo Local">
+                    <div class="change-overlay">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                </div>
+                <div class="team-info">
+                    <input type="text" id="nombre-local" class="team-name" value="EQUIPO LOCAL" maxlength="20">
+                    <div class="score-container">
+                        <button class="btn-score minus" onclick="updateScore('local', -1)">-</button>
+                        <div class="score" id="score-local">0</div>
+                        <button class="btn-score plus" onclick="updateScore('local', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separador -->
+            <div class="separator">
+                <div class="vs">VS</div>
+                <div class="time-container">
+                    <div class="time" id="time">00:00</div>
+                    <div class="time-controls">
+                        <button onclick="controlTime('start')"><i class="fas fa-play"></i></button>
+                        <button onclick="controlTime('pause')"><i class="fas fa-pause"></i></button>
+                        <button onclick="controlTime('reset')"><i class="fas fa-redo"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipo Visitante -->
+            <div class="team team-visitor">
+                <div class="team-info">
+                    <input type="text" id="nombre-visitante" class="team-name" value="EQUIPO VISITANTE" maxlength="20">
+                    <div class="score-container">
+                        <button class="btn-score minus" onclick="updateScore('visitor', -1)">-</button>
+                        <div class="score" id="score-visitor">0</div>
+                        <button class="btn-score plus" onclick="updateScore('visitor', 1)">+</button>
+                    </div>
+                </div>
+                <div class="escudo-container" onclick="changeLogo('visitor')">
+                    <img id="escudo-visitante" src="escudos/default.png" alt="Escudo Visitante">
+                    <div class="change-overlay">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel de Controles (solo visible en modo edición) -->
+        <div class="controls-panel" id="controlsPanel">
+            <h3>Configuración</h3>
+            
+            <div class="control-group">
+                <h4>Cambiar Escudos</h4>
+                <div class="logo-selector">
+                    <div>
+                        <label>Local:</label>
+                        <input type="file" id="logo-local-input" accept="image/*" onchange="uploadLogo('local', this)">
+                    </div>
+                    <div>
+                        <label>Visitante:</label>
+                        <input type="file" id="logo-visitor-input" accept="image/*" onchange="uploadLogo('visitor', this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h4>Color del Marcador</h4>
+                <input type="color" id="color-picker" value="#1a237e" onchange="changeColor(this.value)">
+            </div>
+
+            <div class="control-group">
+                <h4>Estilo del Marcador</h4>
+                <select id="style-selector" onchange="changeStyle(this.value)">
+                    <option value="default">Estándar</option>
+                    <option value="modern">Moderno</option>
+                    <option value="classic">Clásico</option>
+                    <option value="minimal">Minimalista</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <h4>Guardar/Cargar</h4>
+                <button onclick="saveConfig()"><i class="fas fa-save"></i> Guardar</button>
+                <button onclick="loadConfig()"><i class="fas fa-folder-open"></i> Cargar</button>
+                <button onclick="resetAll()"><i class="fas fa-trash"></i> Resetear</button>
+            </div>
+
+            <div class="control-group">
+                <button class="toggle-edit" onclick="toggleEditMode()">
+                    <i class="fas fa-eye"></i> Ocultar Controles
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón flotante para mostrar controles -->
+        <button class="floating-btn" id="floatingBtn" onclick="toggleEditMode()">
+            <i class="fas fa-cog"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

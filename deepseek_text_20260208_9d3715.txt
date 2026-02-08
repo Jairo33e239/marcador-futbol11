@@ -1,0 +1,10 @@
+/marcador-futbol/
+│
+├── index.html
+├── style.css
+├── script.js
+├── config.json
+└── /escudos/
+    ├── equipo1.png
+    ├── equipo2.png
+    └── default.png

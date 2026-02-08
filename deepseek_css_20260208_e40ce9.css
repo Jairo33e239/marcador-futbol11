@@ -1,0 +1,426 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+}
+
+/* Marcador Principal */
+.scoreboard {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 5px solid #1a237e;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex: 1;
+}
+
+.team-local {
+    justify-content: flex-start;
+}
+
+.team-visitor {
+    justify-content: flex-end;
+}
+
+.escudo-container {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.escudo-container:hover {
+    transform: scale(1.05);
+}
+
+.escudo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border: 4px solid currentColor;
+}
+
+.change-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    font-size: 2rem;
+}
+
+.escudo-container:hover .change-overlay {
+    opacity: 1;
+}
+
+.team-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.team-name {
+    font-size: 2.8rem;
+    font-weight: 900;
+    text-align: center;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.team-name:focus {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.score-container {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.btn-score {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-score:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-score:active {
+    transform: scale(0.95);
+}
+
+.score {
+    font-size: 7rem;
+    font-weight: 900;
+    min-width: 140px;
+    text-align: center;
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.separator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 0 40px;
+}
+
+.vs {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ff5722;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.time-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.time {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #333;
+    background: #f5f5f5;
+    padding: 15px 30px;
+    border-radius: 15px;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.time-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.time-controls button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.time-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Panel de Controles */
+.controls-panel {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 3px solid #1a237e;
+}
+
+.controls-panel.hidden {
+    display: none;
+}
+
+.control-group {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.control-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.control-group h4 {
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.logo-selector {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo-selector > div {
+    flex: 1;
+    min-width: 250px;
+}
+
+.logo-selector input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    background: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.logo-selector input[type="file"]:hover {
+    border-color: #667eea;
+}
+
+.controls-panel input[type="color"] {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.controls-panel select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    background: white;
+    cursor: pointer;
+}
+
+.controls-panel button {
+    padding: 15px 25px;
+    margin: 5px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.controls-panel button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-edit {
+    background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%) !important;
+    width: 100%;
+    font-size: 1.2rem !important;
+    padding: 18px !important;
+}
+
+/* Botón Flotante */
+.floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 87, 34, 0.4);
+    transition: all 0.3s ease;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 15px 30px rgba(255, 87, 34, 0.6);
+}
+
+/* Estilos Responsivos */
+@media (max-width: 1024px) {
+    .scoreboard {
+        flex-direction: column;
+        gap: 40px;
+        padding: 30px;
+    }
+    
+    .team {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .separator {
+        order: 3;
+        padding: 20px 0;
+    }
+    
+    .escudo-container {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .score {
+        font-size: 5rem;
+        min-width: 100px;
+    }
+    
+    .team-name {
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-btn {
+        display: flex;
+    }
+    
+    .controls-panel {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+        z-index: 1000;
+        overflow-y: auto;
+        display: none;
+    }
+    
+    .controls-panel:not(.hidden) {
+        display: block;
+    }
+}
+
+/* Estilos diferentes */
+.scoreboard.modern {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: white;
+}
+
+.scoreboard.modern .team-name {
+    color: white;
+}
+
+.scoreboard.modern .score {
+    background: linear-gradient(135deg, #00b4db, #0083b0);
+    -webkit-background-clip: text;
+}
+
+.scoreboard.classic {
+    background: #8B0000;
+    border: 10px solid #FFD700;
+}
+
+.scoreboard.minimal {
+    background: white;
+    border: 2px solid #333;
+    box-shadow: none;
+}
+
+.scoreboard.minimal .score {
+    background: #333;
+    -webkit-background-clip: text;
+}
